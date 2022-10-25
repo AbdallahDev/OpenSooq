@@ -1,5 +1,8 @@
+from pprint import pprint
+
 from bs4 import BeautifulSoup
 import requests
+import pandas
 
 URL = "https://bit.ly/3gsTv9O"
 response = requests.get(url=URL).text
@@ -22,3 +25,7 @@ cities = [" ".join(tag.select_one(selector='div.clear.font-12').get_text().strip
 areas = [" ".join(tag.select_one(selector='div.clear.font-12').get_text().strip().split()).split("|")[1].replace(
     " Cars For Sale ", "").lstrip() for tag in
          car_tags]
+
+cars = {"brands": brands[4:8], "models": models[4:8]}
+data = pandas.DataFrame(cars)
+data.to_excel("cars.xlsx")
